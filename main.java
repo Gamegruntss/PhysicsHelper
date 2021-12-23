@@ -36,53 +36,70 @@ public class main{
 		double deltaY = GUI.deltaY;
 		double acc = GUI.acceleration;
 		
+		String initialVelOutput = "The initial velocity is ";
 		String timeOutput = "The change in time is ";
 		String finalVelOutput = "The final velocity is ";
 		String deltaYOutput = "The change in height is ";
 		
 		Kinematics k = new Kinematics(Vi, Vf, deltaT, deltaY, acc);		
 		
+		
+		//all outputs for initial velocity
+		
+		if(GUI.iniVboo && GUI.dtGive) {
+			initialVelOutput += roundTwo(k.ViFromTime());
+		}
+		
+		if(GUI.iniVboo && GUI.dyGiven && !GUI.dtGive) {
+			initialVelOutput += roundTwo(k.ViFromMaxY());
+		}
+		
+		
+		initialVelOutput += " m/s.";
+		
+		
 		//all outputs for final velocity
 		
-				if(GUI.finVboo && GUI.dyGiven) {
-					finalVelOutput += roundTwo(k.vF_from_vI_useY());
-					k.setVf(k.vF_from_vI_useY());
-				}
+		if(GUI.finVboo && GUI.dyGiven) {
+			k.setDeltaY(k.highestFromVi());
+			finalVelOutput += roundTwo(k.vF_from_vI_useY());
+			k.setVf(k.vF_from_vI_useY());
+		}
 				
-				if (GUI.finVboo && GUI.ViGive && !GUI.dyGiven) {
-					finalVelOutput += roundTwo(k.vFinalNoY());
+		if (GUI.finVboo && GUI.ViGive && !GUI.dyGiven) {
+			finalVelOutput += roundTwo(k.vFinalNoY());
 					
-				}
+		}
 				
-				finalVelOutput += " m/s.";
+		finalVelOutput += " m/s.";
 				
 		
 		//all outputs for if time is required
 		
 		
 		
-		if(GUI.dTboo && GUI.dyGiven && !GUI.ViGive) {
-			timeOutput += roundTwo(k.timeSolveFFfromRest());
-		} else
-		
-		if(GUI.dTboo && GUI.ViGive && !GUI.dyGiven) {
-			timeOutput += roundTwo(k.timeSolveFFposVi());
-		} else
-		
-		if(GUI.dTboo && k.getVf() != 0) {
-			timeOutput += roundTwo(k.timeSolveViVf()); 
-		}
+		if(GUI.dTboo && GUI.dyGiven && !GUI.ViGive && !GUI.iniVboo) {
+			timeOutput += Math.abs(roundTwo(k.timeSolveFFfromRest()));
+		} else if(GUI.dTboo && GUI.ViGive && !GUI.dyGiven) {
+			timeOutput += Math.abs(roundTwo(k.timeSolveFFposVi()));
+		} else if(GUI.dTboo && GUI.ViGive && GUI.dyGiven && Vi > 0) {
+			timeOutput += Math.abs(roundTwo((0.5 * k.timeSolveFFposVi()) + k.timeSolveFFfromRest()));
+		} else if(GUI.dTboo && k.getVf() != 0) {
+			timeOutput += Math.abs(roundTwo(k.timeSolveViVf())); 
+		} /*else if(GUI.dTboo && GUI.iniVboo) {
+			timeOutput += ;
+		}*/
 		
 		timeOutput += " seconds.";
 		
 		
 		//all out puts for if deltaY is required
 		
-		if(GUI.dYboo && ((!GUI.ViGive) || Vi == 0 ) && GUI.dtGive) {
+		if(GUI.dYboo && ((!GUI.ViGive) || Vi == 0 ) && !GUI.iniVboo && GUI.dtGive) {
 			deltaYOutput += roundTwo(k.YsolveRestDT());
 		}
 		
-		if(GUI.dYboo && (GUI.ViGive || Vi > 0)) {
+		if(GUI.dYboo && (GUI.ViGive || k.getVi() > 0) && !GUI.dtGive) {
 			deltaYOutput += roundTwo(k.highestFromVi());
 		}
 		
@@ -93,7 +110,7 @@ public class main{
 		//finalizations
 		
 		if(GUI.iniVboo) {
-			reqdOutput += "\n";
+			reqdOutput += initialVelOutput + "\n";
 			count++;
 		}
 
