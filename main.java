@@ -40,6 +40,7 @@ public class main{
 		String timeOutput = "The change in time is ";
 		String finalVelOutput = "The final velocity is ";
 		String deltaYOutput = "The change in height is ";
+		String maxHeight = "The maximum height/peak is ";
 		
 		Kinematics k = new Kinematics(Vi, Vf, deltaT, deltaY, acc);		
 		
@@ -82,8 +83,10 @@ public class main{
 			timeOutput += Math.abs(roundTwo(k.timeSolveFFfromRest()));
 		} else if(GUI.dTboo && GUI.ViGive && !GUI.dyGiven) {
 			timeOutput += Math.abs(roundTwo(k.timeSolveFFposVi()));
-		} else if(GUI.dTboo && GUI.ViGive && GUI.dyGiven && Vi > 0) {
+		} else if(GUI.dTboo && GUI.ViGive && GUI.dyGiven && k.getDY() < 0 && Vi > 0) {
 			timeOutput += Math.abs(roundTwo((0.5 * k.timeSolveFFposVi()) + k.timeSolveFFfromRest()));
+		} else if(GUI.dTboo && GUI.ViGive && GUI.dyGiven && k.getDY() > 0){
+			timeOutput += Math.abs(roundTwo(k.timeSolveFFposVi()));
 		} else if(GUI.dTboo && k.getVf() != 0) {
 			timeOutput += Math.abs(roundTwo(k.timeSolveViVf())); 
 		} /*else if(GUI.dTboo && GUI.iniVboo) {
@@ -97,13 +100,16 @@ public class main{
 		
 		if(GUI.dYboo && ((!GUI.ViGive) || Vi == 0 ) && !GUI.iniVboo && GUI.dtGive) {
 			deltaYOutput += roundTwo(k.YsolveRestDT());
+			maxHeight += Math.abs(roundTwo(k.YsolveRestDT()));
 		}
 		
 		if(GUI.dYboo && (GUI.ViGive || k.getVi() > 0) && !GUI.dtGive) {
 			deltaYOutput += roundTwo(k.highestFromVi());
+			maxHeight += Math.abs(roundTwo(k.highestFromVi()));
+			
 		}
 		
-		deltaYOutput += " meters.";
+		deltaYOutput += " meters.\n" + maxHeight + " meters high.";
 		
 		
 		reqdOutput = "";
