@@ -93,6 +93,7 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		frame.setVisible(false);
 		frame.setBounds(100, 100, 958, 607);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -310,6 +311,15 @@ public class GUI {
 		});
 		daReq.setBounds(559, 251, 107, 23);
 		frame.getContentPane().add(daReq);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Time of Max Height");
+		chckbxNewCheckBox.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
+		chckbxNewCheckBox.setBounds(525, 425, 141, 23);
+		frame.getContentPane().add(chckbxNewCheckBox);
+		
+		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("");
+		chckbxNewCheckBox_1.setBounds(688, 425, 97, 23);
+		frame.getContentPane().add(chckbxNewCheckBox_1);
 		
 		
 		

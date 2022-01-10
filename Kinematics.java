@@ -21,6 +21,21 @@ public class Kinematics {
 	//freefall problem methods
 	
 	
+	//initial velocity methods
+	public double ViFromTime() {
+		vInitial = (-1 * acc * (0.5 * time));
+		return vInitial;
+	}
+	
+	public double ViFromMaxY(){
+		vInitial = (this.VfFromRestGivenY()) * -1;
+		return vInitial;
+	}
+	
+	
+	
+	//final velocity formulas
+	
 	public double vFinalNoY() {
 		vFinal = vInitial + (acc * time);
 		vFinal *= -1;
@@ -40,16 +55,20 @@ public class Kinematics {
 		return vFinal;
 	}
 	
+	public double VfFromRestGivenY() {
+		vFinal = -1 * Math.sqrt(Math.abs(2*acc*deltaY));
+		return vFinal;
+	}
+	
 	
 	//solve for time methods
 	
 	public double timeSolveFFfromRest() {
-		time = Math.sqrt((2 * deltaY) / acc);
+		time = Math.sqrt((2 * Math.abs(deltaY)) / Math.abs(acc));
 		return time;
 	}
 	
 	public double timeSolveFFposVi() {
-		;
 		time = (-2*vInitial)/acc;
 		return time;
 	}
@@ -62,15 +81,18 @@ public class Kinematics {
 	
 	//solve for deltaY methods
 	
-	
-	//solving from rest with deltaT as given
 	public double YsolveRestDT(){
 		deltaY = ((1.0/2.0) * acc * (time*time));
 		return deltaY;
 	}
 	
 	public double highestFromVi() {
-		deltaY += ((0 - (vInitial * vInitial)/(2*acc)));
+		
+		
+		if(vInitial > 0) {
+			deltaY += ((0 - (vInitial * vInitial)/(2*acc))) * -1;
+		}
+		
 		return deltaY;
 	}
 	
@@ -93,6 +115,10 @@ public class Kinematics {
 	
 	public double getVf() {
 		return vFinal;
+	}
+	
+	public double getDY() {
+		return deltaY;
 	}
 	
 	
