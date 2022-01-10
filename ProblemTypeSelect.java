@@ -62,10 +62,11 @@ public class ProblemTypeSelect {
 		contentPane.add(subheading);
 		
 		JButton FreeFallButton = new JButton("Freefall");
+		FreeFallButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		FreeFallButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				GUI gui = new GUI();
+				FFGUI gui = new FFGUI();
 				gui.setVisible(true);
 				
 			}
@@ -74,14 +75,31 @@ public class ProblemTypeSelect {
 		contentPane.add(FreeFallButton);
 		
 		JButton ProjectileButton = new JButton("Projectile");
+		ProjectileButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+		ProjectileButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				ProjectileGUI projGUI = new ProjectileGUI();
+				projGUI.setVisible(true);
+			}
+		});
 		ProjectileButton.setBounds(490, 323, 144, 45);
 		contentPane.add(ProjectileButton);
 		
 		JButton StaticsButton = new JButton("Statics");
+		StaticsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				StaticsGUI s = new StaticsGUI();
+				s.setVisible(true);
+			}
+		});
+		StaticsButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		StaticsButton.setBounds(269, 323, 144, 45);
 		contentPane.add(StaticsButton);
 		
 		JButton DynamicsButton = new JButton("Dynamics");
+		DynamicsButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		DynamicsButton.setBounds(269, 227, 144, 45);
 		contentPane.add(DynamicsButton);
 	}
